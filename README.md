@@ -144,4 +144,5 @@ jobs: # A workflow is made up of jobs
 
 This project has demonstrated how to set up a basic continuous integration system for a Python project. From here, any time we check a new Python script into our codebase, it will test all Python functions to make sure they still work. 
 
-From here, we can go onto more complex tasks, like testing our code against multiple versions of Python, or pushing the project from Github onto a cloud provider like AWS, or turning our code into a Docker container and putting it on a register. Explore more possibilities in the [Github Actions documentation](https://github.com/durandsinclair/addtwo/actions/new).
+From here, we can go onto more complex tasks, like testing our code against multiple versions of Python, or pushing the project from Github onto a cloud provider like AWS, or turning our code into a Docker container and putting it on a register. Explore more possibilities in the [Github Actions documentation](https://github.com/durandsinclair/addtwo/actions/new). 
+
