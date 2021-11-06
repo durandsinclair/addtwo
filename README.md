@@ -6,7 +6,7 @@
 This project tries to use best practice data engineering to build a simple Python script. The script itself is just a simple function that adds two numbers together. But the rest of the project uses the techniques of the world's best software engineering practices, including: 
 * MAKEFILES - Where we replace fiddly Linux commands with easy-to-remember `make` commands
 * TEST DRIVEN DEVELOPMENT - Where we have tests for each of our Python functions (well, our one Python function).
-* CONTINUOUS INTEGRATION  - So that when we make any changes to the code base in future, it will automatically run all the tests, not only to make sure the functions work as expected, but the code is run through a linter to make sure it's easy to read and formatted properly.  
+* CONTINUOUS INTEGRATION  - So that when we make any changes to the code base in future, Github will automatically run all the tests, not only to make sure the functions work as expected, but the code is run through a linter to make sure it's easy to read and formatted properly.  
 
 
 ## How We'll Do It
@@ -15,15 +15,15 @@ First, we'll need to get the project working on a local machine.
 We'll need four files + a Python environment.
 * `addtwo.py` - which contains the actual Python code to add numbers together
 * `test_addtwo.py` - which contains automated tests to make sure the Python code works
-* `Makefile` - which turns complicated Linux commands into simple commands like "make install". This will make it easier to install, lint and test our Python code.
+* `Makefile` - which allows us to replace complicated Linux commands with simple ones, based on our own definitions. For instance, I can type "make install" instead of both "pip install --upgrade pip" and "pip install -r requirements.txt". This makes it easier to install, lint and test our Python code, particularly when we want to run our installation on another computer.
 * `requirements.txt` - which lists the Python libraries that need to be installed for the project to run.
 
-Once it works on a local machine, we can upload it to Github, and use 
+Once it works on a local machine, we can upload it to Github, and use Github Actions to set up a CI/CD pipeline, which means that any changes to the code will trigger all the tests.
 
 ## Part 1: Local Environment Workflow
 
 ### Set up Environment
-Before we begin, we need to set up a virtual environment so that the settings of this project doesn't mess up the settings on another part of our computer. (Note: I'm going to call my virtual environment `.venv`, because putting a dot before the word means it doesn't end up in our repository. Let each device using this code write their own Python environment, if necessary.) 
+Before we begin, we need to set up a virtual environment just like we do with every Python project. Python does this so that the settings of this project doesn't mess up the settings on another part of our computer. (Note: I'm going to call my virtual environment `.venv`. This will mean that it won't upload itself to GitHub, so anyone who uses this project will have to create their own environment before running it. But that's good. Let each device using this code write their own Python environment, if necessary.) 
 
 ```bash
 # Create an environment for my local machine
@@ -34,7 +34,7 @@ source .venv/bin/activate
 ```
 
 ### Set up Requirements file
-Let's list all the Python libraries we'll need in a file called `requirements.txt`. We'll install these libraries with code later on, but having them on a list makes it easier to do in any environment.
+Let's list all the Python libraries we'll need in a file called `requirements.txt`. Usually you'll find libraries like `numpy` or `pandas` or `matplotlib`. But in this case, let's have the bare minimum. We'll install these libraries with code later on, but having them on a list makes it easier to do in any environment.
 
 ```requirements.txt
 pylint
@@ -42,7 +42,9 @@ pytest
 pytest-cov
 ```
 The libraries in the list do the following.
-`pylint`  - 
+`pylint`  - A library to lint our code. Linting checks the formatting of the Python and makes sure it's neat. Is this necessary? Well ... no. But you try reading messy code two years later. So let's include it.
+
+`pytest` - This library lets us write tests that 
 ### Set up Makefile
 The hard part about Python software is that you need to know a whole different language (bash) to set up the Python project. A Makefile allows you to write little bash scripts which you can call later. For instance, I can write a bash script called `install`, and then just type `make install` to run all those lines of bash whenever I want later. And beneath it, I can write a bash script called `lint` and type `make lint` to call that later. 
 
