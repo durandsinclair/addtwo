@@ -48,11 +48,11 @@ The libraries in the list do the following.
 ### Set up Makefile
 The hard part about Python software is that you need to know a whole different language (bash) to set up the Python project. A Makefile allows you to write little bash scripts which you can call later. For instance, I can write a bash script called `install`, and then just type `make install` to run all those lines of bash whenever I want later. And beneath it, I can write a bash script called `lint` and type `make lint` to call that later. 
 
-The specific make scripts we're making include
-`install` - to install the Python libraries listed in `requirements.txt`
-`lint` - to check how neat our Python code is, to prompt us to tidy it up
-`format` - to automatically make sure we've got the right amount of blank lines between functions, and no unnecessary extra lines at the end.
-`test` - to test our codebase works as intended by running the tests in our test suite.
+The specific make scripts we're making include:  
+`install` - to install the Python libraries listed in `requirements.txt`  
+`lint` - to check how neat our Python code is, to prompt us to tidy it up  
+`format` - to automatically make sure we've got the right amount of blank lines between functions, and no unnecessary extra lines at the end.  
+`test` - to test our codebase works as intended by running the tests in our test suite.  
 
 A full tutorial on Makefiles can be found [here](https://makefiletutorial.com/).
 
