@@ -62,12 +62,18 @@ install:
 	pip install --upgrade pip &&\
 	pip install -r requirements.txt
 lint:
+# $(info No linting set up yet.)
 	pylint -d=R,C addtwo.py
+
 format:
 	black *.py
 test:
+# $(info No tests set up yet.)
 	pytest -vv --cov=addtwo test_addtwo.py
 ```
+
+In the script above, I've added two lines that have been commented out. If uncommented, they'd return a line of text (eg "No linting set up yet") instead of running a block of code.
+
 
 ### Set up Python Test File
 If we want to make sure our code will always work, we have to test it every time we change it. That's why best practice is to write tests for each Python function in our codebase, and to write the tests before we write the code. 
