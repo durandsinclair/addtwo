@@ -13,17 +13,17 @@ This project tries to use best practice data engineering to build a simple Pytho
 
 First, we'll need to get the project working on a local machine.
 We'll need four files + a Python environment.
-* `addtwo.py` - which contains the actual Python code to add numbers together
-* `test_addtwo.py` - which contains automated tests to make sure the Python code works
-* `Makefile` - which allows us to replace complicated Linux commands with simple ones, based on our own definitions. For instance, I can type "make install" instead of both "pip install --upgrade pip" and "pip install -r requirements.txt". This makes it easier to install, lint and test our Python code, particularly when we want to run our installation on another computer.
-* `requirements.txt` - which lists the Python libraries that need to be installed for the project to run.
+* `addtwo.py` - which contains the actual Python code to add numbers together. 
+* `test_addtwo.py` - which contains automated tests to make sure the Python code works. 
+* `Makefile` - which allows us to replace complicated Linux commands with simple ones, based on our own definitions. For instance, I can type "make install" instead of both "pip install --upgrade pip" and "pip install -r requirements.txt". This makes it easier to install, lint and test our Python code, particularly when we want to run our installation on another computer.  
+* `requirements.txt` - which lists the Python libraries that need to be installed for the project to run.  
 
-Once it works on a local machine, we can upload it to Github, and use Github Actions to set up a CI/CD pipeline, which means that any changes to the code will trigger all the tests.
+Once it works on a local machine, we can upload it to Github, and use Github Actions to set up a CI/CD pipeline, which means that any changes to the code will trigger all the tests.  
 
-## Part 1: Local Environment Workflow
+## Part 1: Local Environment Workflow. 
 
-### Set up Environment
-Before we begin, we need to set up a virtual environment just like we do with every Python project. Python does this so that the settings of this project doesn't mess up the settings on another part of our computer. (Note: I'm going to call my virtual environment `.venv`. This will mean that it won't upload itself to GitHub, so anyone who uses this project will have to create their own environment before running it. But that's good. Let each device using this code write their own Python environment, if necessary.) 
+### Set up Environment  
+Before we begin, we need to set up a virtual environment just like we do with every Python project. Python does this so that the settings of this project doesn't mess up the settings on another part of our computer. (Note: I'm going to call my virtual environment `.venv`. This will mean that it won't upload itself to GitHub, so anyone who uses this project will have to create their own environment before running it. But that's good. Let each device using this code write their own Python environment, if necessary.)  
 
 ```bash
 # Create an environment for my local machine
@@ -41,10 +41,11 @@ pylint
 pytest
 pytest-cov
 ```
-The libraries in the list do the following.
-`pylint`  - A library to lint our code. Linting checks the formatting of the Python and makes sure it's neat. Is this necessary? Well ... no. But you try reading messy code two years later. So let's include it.
+The libraries in the list do the following.  
+`pylint`  - A library to lint our code. Linting checks the formatting of the Python and makes sure it's neat. Is this necessary? Well ... no. But you try reading messy code two years later. So let's include it.  
 
-`pytest` - This library lets us write tests that 
+`pytest` - This library lets us write tests to see if the result of a function is what we'd expect. These tests can be run automatically whenever we make a change, so that we can be sure that the code still works as we want it to.  
+
 ### Set up Makefile
 The hard part about Python software is that you need to know a whole different language (bash) to set up the Python project. A Makefile allows you to write little bash scripts which you can call later. For instance, I can write a bash script called `install`, and then just type `make install` to run all those lines of bash whenever I want later. And beneath it, I can write a bash script called `lint` and type `make lint` to call that later. 
 
