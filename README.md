@@ -25,6 +25,7 @@ Once it works on a local machine, we can upload it to Github, and use Github Act
 ### Set up Environment  
 Before we begin, we need to set up a virtual environment just like we do with every Python project. Python does this so that the settings of this project doesn't mess up the settings on another part of our computer. (Note: I'm going to call my virtual environment `.venv`. This will mean that it won't upload itself to GitHub, so anyone who uses this project will have to create their own environment before running it. But that's good. Let each device using this code write their own Python environment, if necessary.)  
 
+#### [Mac](#tab/Mac/)
 ```bash
 # Create an environment for my local machine
 python3 -m venv .venv
@@ -32,6 +33,18 @@ python3 -m venv .venv
 # Activate the environment
 source .venv/bin/activate
 ```
+
+#### [PC](#tab/PC/)
+```bash
+# Create an environment for my local machine
+# Open a Terminal window in VS Code of the type Git Bash rather than Powershell or Command Prompt
+python -m venv .venv
+
+# Activate the environment
+source .venv/Scripts/activate
+```
+
+* * * 
 
 ### Set up Requirements file
 Let's list all the Python libraries we'll need in a file called `requirements.txt`. Usually you'll find libraries like `numpy` or `pandas` or `matplotlib`. But in this case, let's have the bare minimum. We'll install these libraries with code later on, but having them on a list makes it easier to do in any environment.
