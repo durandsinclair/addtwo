@@ -23,7 +23,7 @@ Once it works on a local machine, we can upload it to Github, and use Github Act
 ## Part 1: Local Environment Workflow. 
 
 ### Set up Environment  
-Before we begin, we need to set up a virtual environment just like we do with every Python project. Python does this so that the settings of this project doesn't mess up the settings on another part of our computer. (Note: I'm going to call my virtual environment `.venv`. This will mean that it won't upload itself to GitHub, so anyone who uses this project will have to create their own environment before running it. But that's good. Let each device using this code write their own Python environment, if necessary.)  
+Before we begin, we need to set up a virtual environment just like we do with every Python project. Python does this so that the settings of this project doesn't mess up the settings on another part of our computer. (Note: I'm going to call my virtual environment `.venv`. This will mean that it won't upload itself to GitHub, so anyone who uses this project will have to create their own environment before running it. But that's good. An environment on AWS might need to be slightly different than an environment on a PC for example. Let each device using this code write their own Python environment before starting, if necessary.)  
 
 #### [Mac](#tab/Mac/)
 ```bash
@@ -47,7 +47,7 @@ source .venv/Scripts/activate
 * * * 
 
 ### Set up Requirements file
-Let's list all the Python libraries we'll need in a file called `requirements.txt`. Usually you'll find libraries like `numpy` or `pandas` or `matplotlib`. But in this case, let's have the bare minimum. We'll install these libraries with code later on, but having them on a list makes it easier to do in any environment.
+Rather than typing things like `pip install numpy` and then `pip install pandas` until our fingers bleed, let's just list all the Python libraries we'll need in a file called `requirements.txt` and get the computer to install all of them. In this example requirements file, I'm only installing three libraries, but they're all good basic libraries to include. 
 
 ```requirements.txt
 pylint
@@ -59,12 +59,14 @@ The libraries in the list do the following.
 
 `pytest` - This library lets us write tests to see if the result of a function is what we'd expect. These tests can be run automatically whenever we make a change, so that we can be sure that the code still works as we want it to.  
 
-### Set up Makefile
-The hard part about Python software is that you need to know a whole different language (bash) to set up the Python project. A Makefile allows you to write little bash scripts which you can call later. For instance, I can write a bash script called `install`, and then just type `make install` to run all those lines of bash whenever I want later. And beneath it, I can write a bash script called `lint` and type `make lint` to call that later. 
+`pytest-cov` - This library looks at the tests we've written and tells us how well they test our code. That is, test coverage.  
 
-The specific make scripts we're making include:  
+### Set up Makefile
+The hard part about Python is that you can't code with it until you've set up a Python project. And you need to know a whole different language (bash) to do that. A Makefile makes this easier by letting you give a label to a few lines of bash script, and then typing the label to run them again later. For instance, I can write some bash code to install the libraries in my requirements file, give it a label called `install`, and then just type `make install` to run all those lines of bash whenever I want.  
+
+The specific Makefile scripts we're including are:  
 `install` - to install the Python libraries listed in `requirements.txt`  
-`lint` - to check how neat our Python code is, to prompt us to tidy it up  
+`lint` - to check how neat our Python code is, which will prompt us to tidy it up if necessary
 `format` - to automatically make sure we've got the right amount of blank lines between functions, and no unnecessary extra lines at the end.  
 `test` - to test our codebase works as intended by running the tests in our test suite.  
 
@@ -76,23 +78,28 @@ install:
 	pip install --upgrade pip &&\
 	pip install -r requirements.txt
 lint:
+	# Lint our code, to judge its neatness
 # $(info No linting set up yet.)
-	pylint -d=R,C addtwo.py
+	pylint -d=R,C *.py
 
 format:
+	# Automatically fix up any formatting issues
 	black *.py
+	
 test:
+	# Run all tests, verbosely so there's more information
 # $(info No tests set up yet.)
-	pytest -vv --cov=addtwo test_addtwo.py
+	pytest -v
 ```
 
-In the script above, I've added two lines that have been commented out. If uncommented, they'd return a line of text (eg "No linting set up yet") instead of running a block of code.
+In the script above, I've added a line in `test` that has been commented out. If uncommented, it would return a line of text (eg "No tests set up yet") instead of running a block of code. Just included it to show how it's done.
 
 
 ### Set up Python Test File
 If we want to make sure our code will always work, we have to test it every time we change it. That's why best practice is to write tests for each Python function in our codebase, and to write the tests before we write the code. 
 ```python
-from addtwo import addtwo
+
+from addtwo import addtwo    # Get the function called addtwo from the file called addtwo
 
 def test_addtwo():
 	""" Tests if the addtwo function works """
@@ -109,7 +116,7 @@ def addtwo(first second)
 ```
 
 ### Run functions to make sure it all works
-Now that everything is written, we can execute all the components of our program to make sure it works. But because we've written a Makefile, this is simply a case of typing some `make` commands.
+Now that everything is written, we can execute all the components of our program to make sure it works. But because we've written a Makefile, this is simply a case of typing some `make` commands in the terminal window. 
 ```bash
 make install
 make lint
@@ -128,9 +135,10 @@ git remote add origin <address of repo>
 git branch -M main
 git push -u origin main
 ```
+This pushes our code to Github, which is a sort of hard drive in the cloud for code. 
 
 ### Set up Continuous Integration with Github Actions
-Github Actions allows you to write a workflow (a YAML script) that you can get to run automatically every time a particular event happens, like code being checked in or out of a codebase. In our case, every time we check code in, we'll run unit tests, lint the Python code for neatness, and fix up the formatting using the make commands we prepared earlier.
+Github has a tool called Github Actions which allows you to write a workflow (a YAML script) that runs automatically every time a particular event happens, like code being checked in or out of a codebase. In our case, every time we check code in, we'll run unit tests, lint the Python code for neatness, and fix up the formatting using the make commands we prepared earlier.
 
 More information about how Github Actions works can be found [here:](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions)
 
@@ -166,5 +174,5 @@ jobs: # A workflow is made up of jobs
 
 This project has demonstrated how to set up a basic continuous integration system for a Python project. From here, any time we check a new Python script into our codebase, it will test all Python functions to make sure they still work. 
 
-From here, we can go onto more complex tasks, like testing our code against multiple versions of Python, or pushing the project from Github onto a cloud provider like AWS, or turning our code into a Docker container and putting it on a register. Explore more possibilities in the [Github Actions documentation](https://github.com/durandsinclair/addtwo/actions/new). 
+From here, we can go onto more complex tasks, like testing our code against multiple versions of Python, or pushing the project from Github onto different cloud providers like AWS or Azure. We could also put our code into a Docker container and send it to a register, publishing it for the world. Explore more possibilities in the [Github Actions documentation](https://github.com/durandsinclair/addtwo/actions/new). 
 
